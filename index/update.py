@@ -9,6 +9,7 @@ from BeautifulSoup import BeautifulSoup
 # Load Django config
 current_dir = os.path.abspath(__file__)
 projects_dir = os.sep.join(current_dir.split(os.sep)[:-2])
+data_dir = os.path.join(projects_dir, 'index', 'data')
 os.environ['PYTHONPATH'] = projects_dir
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 sys.path.append(projects_dir)
@@ -52,6 +53,12 @@ def pull():
    url = 'http://www.raptureready.com/rap2.html'
    http = urllib.urlopen(url)
    soup = BeautifulSoup(http)
+
+   # Save the html in our archive
+   outfile_path = os.path.join(data_dir, '%s.html' % str(datetime.datetime.now()))
+   outfile = open(outfile_path, 'w')
+   print >> outfile, soup.prettify()
+
    # Narrow down to the table containing the rankings
    table = soup.find('table', attrs={
        'border': '0',
