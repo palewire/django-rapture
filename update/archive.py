@@ -5,6 +5,20 @@ import urllib
 from BeautifulSoup import BeautifulSoup
 from toolbox._mkdir import _mkdir
 
+def get_explanations(html_dir):
+	"""
+	Quickly download the html with category explanations. 
+	
+	We won't parse it, but we'll save it.
+	"""
+	url = 'http://www.raptureready.com/rap7.html'
+	http = urllib.urlopen(url)
+	soup = BeautifulSoup(http)
+	outfile_path = os.path.join(html_dir, 'rap7.html')
+	outfile = open(outfile_path, 'w')
+	print >> outfile, soup.prettify()
+
+
 def archive(data_dir):
 	"""
 	Visits the Rapture Ready Index and archive the site.
@@ -53,6 +67,9 @@ def archive(data_dir):
 		url = 'http://www.raptureready.com' + r
 		local_path = os.path.join(r_dir, tail)
 		urllib.urlretrieve(url, local_path)
+		
+	# Snatch the explanation file while we're at it.
+	get_explanations(html_dir)
 		
 	return soup
 	
