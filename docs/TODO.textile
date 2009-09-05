@@ -1,3 +1,4 @@
 * Figure out a way to redisplay the source HTML on my site with the images working
 * Figure out a way to parse the examples cited at the bottom of each week's update
-* Create a log of scrape updates so I can keep track of when I've lasted updated everything.
+* Figure out a way to simply publish the data so people can grind with it
+* Put together some admin pages.
