@@ -14,19 +14,19 @@ def load(data_dict, timestamp):
 		print "Added edition %s" % str(edition_obj.date)
 
 	for category, score in data_dict.items():
-	# Load the categories
+		# Load the categories
 		category_obj, category_created = Category.objects.get_or_create(
-		name=category,
-		slug=slugify(category)
-	)
-	if category_created:
-		print "Added category %s" % category_obj.name
+			name=category,
+			slug=slugify(category)
+		)
+		if category_created:
+			print "Added category %s" % category_obj.name
 
-	# Load the scores
-	score_obj, score_created = Score.objects.get_or_create(
-		edition=edition_obj,
-		category=category_obj,
-		score=score
-	)
-	if score_created:
-		print "Added score %s" % score_obj
+		# Load the scores
+		score_obj, score_created = Score.objects.get_or_create(
+			edition=edition_obj,
+			category=category_obj,
+			score=score
+		)
+		if score_created:
+			print "Added score %s" % score_obj

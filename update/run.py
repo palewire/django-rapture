@@ -11,8 +11,12 @@ sys.path.append(projects_dir)
 
 from update.archive import archive
 from update.parse import parse
+from update.load import load
+
+from toolbox.dprint import dprint
 
 if __name__ == '__main__':
 	soup = archive(data_dir)
 	scores_dict, timestamp = parse(soup)
-	print scores_dict
+	dprint(scores_dict)
+	load(scores_dict, timestamp)

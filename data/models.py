@@ -13,7 +13,7 @@ class Category(models.Model):
 	"""
 	name = models.CharField(max_length=20, primary_key=True, help_text=_('The name of the category'))
 	slug = models.SlugField(unique=True, help_text=_('A stripped version of the name for URL strings'))
-	explanation = models.TextField(help_text=_('An explanation of the category provided by the editors of Rapture Ready.'))
+	explanation = models.TextField(help_text=_('An explanation of the category provided by the editors of Rapture Ready.'), null=True, blank=True)
 
 	class Meta:
 		ordering = ['name']
@@ -48,7 +48,7 @@ class Score(models.Model):
 	edition = models.ForeignKey(Edition, help_text=_('The edition this score was released.'))
 	category = models.ForeignKey(Category, help_text=_('The indicator this score is for.'))
 	score = models.IntegerField(help_text=_('The score, ranging from 1-5'))
-	comment = models.TextField(help_text=_('An explanation of this score given by the editors of Rapture Ready.'))
+	comment = models.TextField(help_text=_('An explanation of this score given by the editors of Rapture Ready.'), null=True, blank=True)
 
 	class Meta:
 		ordering = ('edition', )
