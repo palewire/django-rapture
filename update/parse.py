@@ -6,18 +6,6 @@ import datetime
 import urllib
 from BeautifulSoup import BeautifulSoup
 
-# Load Django config
-current_dir = os.path.abspath(__file__)
-projects_dir = os.sep.join(current_dir.split(os.sep)[:-2])
-data_dir = os.path.join(projects_dir, 'archive', 'html')
-os.environ['PYTHONPATH'] = projects_dir
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-sys.path.append(projects_dir)
-
-from django.template.defaultfilters import slugify
-from data.models import Category, Edition, Score
-from toolbox._mkdir import _mkdir
-
 def text2date(text):
 	"""
 	Converts the date strings published by Rapture Ready into a datetime.date object.
@@ -26,10 +14,8 @@ def text2date(text):
 	time_tuple = time.strptime(text, '%b %d, %Y')
 	return datetime.date(*(time_tuple[0:3]))
 
-
 def strip_html(text):
 	return re.sub(r'<[^>]*?>', '', text)
-
 
 def parse_score(text):
 	"""
@@ -43,7 +29,8 @@ def parse_score(text):
 	return text[0]
 
 
-
+def parse(soup):
+	
 	# Narrow down to the table containing the rankings
 	table = soup.find('table', attrs={
 	 'border': '0',
@@ -82,40 +69,4 @@ def parse_score(text):
 
 	# Return the dictionary of scores along with the timestamp in a tuple
 	return scores_dict, timestamp
-
-def load(data_dict, timestamp):
-	"""
-	Accepts the results of the pull function and loads them into our Django models.
-	"""
-
-	# Load the Edition
-	edition_obj, edition_created = Edition.objects.get_or_create(
-		date = timestamp
-	)
-	if edition_created:
-		print "Added edition %s" % str(edition_obj.date)
-
-	for category, score in data_dict.items():
-	# Load the categories
-		category_obj, category_created = Category.objects.get_or_create(
-		name=category,
-		slug=slugify(category)
-	)
-	if category_created:
-		print "Added category %s" % category_obj.name
-
-	# Load the scores
-	score_obj, score_created = Score.objects.get_or_create(
-		edition=edition_obj,
-		category=category_obj,
-		score=score
-	)
-	if score_created:
-		print "Added score %s" % score_obj
-
-
-if __name__ == '__main__':
-	data_dict, timestamp = pull()
-	from pprint import pprint
-	#pprint(data_dict)
-	#load(data_dict, timestamp)
+	

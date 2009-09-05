@@ -3,22 +3,13 @@ import sys
 import datetime
 import urllib
 from BeautifulSoup import BeautifulSoup
-
-# Load Django config
-current_dir = os.path.abspath(__file__)
-projects_dir = os.sep.join(current_dir.split(os.sep)[:-3])
-data_dir = os.path.join(projects_dir, 'archive', 'html')
-os.environ['PYTHONPATH'] = projects_dir
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
-sys.path.append(projects_dir)
-
 from toolbox._mkdir import _mkdir
 
-def archive():
+def archive(data_dir):
 	"""
 	Visits the Rapture Ready Index and archive the site.
 
-	Returns a path to our local copy.
+	Returns a BeautifulSoup object with the HTML in it.
 	"""
 	# Visit the URL and snatch the HTML
 	url = 'http://www.raptureready.com/rap2.html'
@@ -63,7 +54,7 @@ def archive():
 		local_path = os.path.join(r_dir, tail)
 		urllib.urlretrieve(url, local_path)
 		
-	return os.path.join(html_dir, 'rap2.html')
+	return soup
 	
 if __name__ == '__main__':
 	html_path = archive()
