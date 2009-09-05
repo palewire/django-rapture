@@ -5,7 +5,7 @@ def count_scores(sender, instance, signal, *args, **kwargs):
 	"""
 	Runs through all the editions and adds up their current scores.
 	"""
-	from index.models import Edition
+	from data.models import Edition
 	for edition in Edition.objects.all():
 		edition.total = edition.get_total()
 		edition.save()

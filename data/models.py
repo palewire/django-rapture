@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 # Signals
 from django.db.models import signals
-from index.signals import count_scores
+from data.signals import count_scores
 
 
 class Category(models.Model):
