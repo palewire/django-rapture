@@ -1,6 +1,8 @@
 # Helpers
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils.text import truncate_words
+from django.template.defaultfilters import date as date_format
 
 # Signals
 from django.db.models import signals
@@ -20,11 +22,15 @@ class Category(models.Model):
 
 	class Meta:
 		ordering = ['name']
-		verbose_name = _('categories')
+		verbose_name_plural = _('categories')
 		db_table = 'rapture_data_category'
 
 	def __unicode__(self):
 		return self.name
+
+	def get_short_explanation(self, words=10):
+		return truncate_words(self.explanation, words)
+	short_explanation = property(get_short_explanation)
 
 
 class Edition(models.Model):
@@ -66,7 +72,7 @@ class Score(models.Model):
 		db_table = 'rapture_data_score'
 
 	def __unicode__(self):
-		return u'%s - %s - %s' % (str(self.edition.date), self.category.name, self.score)
+		return u'%s: %s (%s)' % (self.category.name, self.score, date_format(self.edition.date, 'N d, Y'))
 
 
 # Rerun the totals for each Edition whenever a Score is saved or deleted.

@@ -2,20 +2,20 @@
 from django.contrib import admin
 
 # Models
-from index.models import *
+from data.models import *
 
 
 class CategoryAdmin(admin.ModelAdmin):
-	pass
+	list_display = ('name', 'short_explanation')
 
 
 class EditionAdmin(admin.ModelAdmin):
-	pass
+	list_display = ('date', 'total',)
 
 
 class ScoreAdmin(admin.ModelAdmin):
-	pass
-
+	list_display = ('__unicode__', 'comment')
+	list_filter = ('edition', 'category', 'score')
 
 admin.site.register(Edition, EditionAdmin)
 admin.site.register(Category, CategoryAdmin)

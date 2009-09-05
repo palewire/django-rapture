@@ -12,7 +12,6 @@ def load(data_dict, timestamp):
 		date = timestamp
 	)
 	if edition_created:
-		print "Added edition %s" % str(edition_obj.date)
 		loaded_new_data = True
 
 	for category, score in data_dict.items():
@@ -22,7 +21,6 @@ def load(data_dict, timestamp):
 			slug=slugify(category)
 		)
 		if category_created:
-			print "Added category %s" % category_obj.name
 			loaded_new_data = True
 
 		# Load the scores
@@ -32,7 +30,6 @@ def load(data_dict, timestamp):
 			score=score
 		)
 		if score_created:
-			print "Added score %s" % score_obj
 			loaded_new_data = True
 			
 	return loaded_new_data
