@@ -9,11 +9,11 @@ class LiveUpdateManager(models.Manager):
 	
 	Example usage:
 		
-		>>> Update.live.all()
+		>>> Update.objects.live()
 		
 	"""
-	def get_query_set(self):
-		return super(LiveUpdateManager, self).get_query_set().filter(outcome='complete')
+	def live(self):
+		return self.filter(outcome='complete')
 
 
 class UpdateLog(models.Model):
@@ -38,8 +38,9 @@ class UpdateLog(models.Model):
 	last_updated = models.DateTimeField(auto_now=True, editable=False)
 	
 	# Managers
-	live = LiveUpdateManager()
+	objects = LiveUpdateManager()
 	
 	class Meta:
 		db_table = 'rapture_update_log'
 		get_latest_by = 'update_end_date'
+		verbose_name_plural = _('update log')

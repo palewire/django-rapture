@@ -17,6 +17,7 @@ class ScoreAdmin(admin.ModelAdmin):
 	list_display = ('__unicode__', 'comment')
 	list_filter = ('edition', 'category', 'score')
 
+
 admin.site.register(Edition, EditionAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Score, ScoreAdmin)

@@ -22,8 +22,7 @@ from toolbox.dprint import dprint
 if __name__ == '__main__':
 	# Prepare log
 	now = datetime.datetime.now()
-	log = UpdateLog(start_date=now)
-	log.save()
+	log = UpdateLog.objects.create(start_date=now)
 
 	# Scrape site
 	soup, html_dir = archive(data_dir)
@@ -39,6 +38,8 @@ if __name__ == '__main__':
 	loaded_new_data = load(scores_dict, timestamp)
 	
 	# Finalize log
+	now = datetime.datetime.now()
+	log.end_date = now
 	log.loaded_new_data = loaded_new_data
 	log.outcome = 'complete'
-	log.save
+	log.save()
