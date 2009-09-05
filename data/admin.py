@@ -10,7 +10,8 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class EditionAdmin(admin.ModelAdmin):
-	list_display = ('date', 'total',)
+	list_display = ('date', 'total', 'prophetic_activity')
+	list_filter = ('prophetic_activity',)
 
 
 class ScoreAdmin(admin.ModelAdmin):

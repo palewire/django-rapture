@@ -37,8 +37,16 @@ class Edition(models.Model):
 	"""
 	A release of the Rapture Index
 	"""
-	date = models.DateField(verbose_name=_('Publication date of this edition of the Rapture Index.'))
-	total = models.IntegerField(default=0, editable=False, verbose_name=_('The total Rapture Index score from this edition.'))
+	date = models.DateField(verbose_name=_('Publication date'))
+	total = models.IntegerField(default=None, null=True, blank=True, editable=False, verbose_name=_('Total Rapture Index score'))
+	PROPHETIC_ACTIVITY_CHOICES = (
+		('slow', '100 and Below: Slow prophetic activity'),
+		('moderate', '100 to 130: Moderate prophetic activity'),
+		('heavy', '130 to 160: Heavy prophetic activity'),
+		('seat-belts', 'Above 160: Fasten your seat belts'),
+		('unclassified', 'Unclassified'),
+	)
+	prophetic_activity = models.CharField(max_length=50, choices=PROPHETIC_ACTIVITY_CHOICES, default='unclassified')
 	# Meta
 	created = models.DateTimeField(auto_now_add=True, editable=False)
 	last_updated = models.DateTimeField(auto_now=True, editable=False)
@@ -53,6 +61,21 @@ class Edition(models.Model):
 
 	def get_total(self):
 		return sum([i.score for i in self.score_set.all()])
+		
+	def get_prophetic_activity(self):
+		"""
+		Returns the level of prophetic activity based on the total, using standards set by the Rapture Ready editors.
+		"""
+		if not self.total:
+			return 'unclassified'
+		elif self.total > 160:
+			return 'seat-belts'
+		elif self.total > 130:
+			return 'heavy'
+		elif self.total > 100:
+			return 'moderate'
+		else:
+			return 'slow'
 
 
 class Score(models.Model):

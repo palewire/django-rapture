@@ -8,4 +8,5 @@ def count_scores(sender, instance, signal, *args, **kwargs):
 	from data.models import Edition
 	for edition in Edition.objects.all():
 		edition.total = edition.get_total()
+		edition.prophetic_activity = edition.get_prophetic_activity()
 		edition.save()
