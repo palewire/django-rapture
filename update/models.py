@@ -2,17 +2,27 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-# Managers
-from update.managers import LiveUpdateManager
+
+class LiveUpdateManager(models.Manager):
+	"""
+	Returns the latest live updates.
+	
+	Example usage:
+		
+		>>> Update.live.all()
+		
+	"""
+	def get_query_set(self):
+		return super(LiveUpdateManager, self).get_query_set().filter(outcome='complete')
 
 
-class Update(models.Model):
+class UpdateLog(models.Model):
 	"""
 	A log of updates.
 	"""
 	# When the update happened
-	update_start_date = models.DateTimeField(help_text=_('When the update process began.'))
-	update_end_date = models.DateTimeField(help_text=_('When the update process finished.'), null=True, blank=True)
+	start_date = models.DateTimeField(help_text=_('When the update process began.'))
+	end_date = models.DateTimeField(help_text=_('When the update process finished.'), null=True, blank=True)
 	
 	# How the update went
 	archive_path = models.CharField(max_length=1000, null=True, blank=True, help_text=_('Where the files harvested by the scrape are stored.'))
@@ -20,7 +30,7 @@ class Update(models.Model):
 		('incomplete', 'incomplete'),
 		('complete', 'complete'),
 	)
-	update_outcome = models.CharField(max_length=20, default='incomplete', choices=OUTCOME_CHOICES, help_text=_('How the update turned out.'))
+	outcome = models.CharField(max_length=20, default='incomplete', choices=OUTCOME_CHOICES, help_text=_('How the update turned out.'))
 	loaded_new_data = models.NullBooleanField(default=None, help_text=_('Indicates whether the update loaded any new data to our database.'))
 	
 	# Meta

@@ -23,7 +23,7 @@ def archive(data_dir):
 	"""
 	Visits the Rapture Ready Index and archive the site.
 
-	Returns a BeautifulSoup object with the HTML in it.
+	Returns a BeautifulSoup object with the HTML in it and the path to the flat files.
 	"""
 	# Visit the URL and snatch the HTML
 	url = 'http://www.raptureready.com/rap2.html'
@@ -71,7 +71,7 @@ def archive(data_dir):
 	# Snatch the explanation file while we're at it.
 	get_explanations(html_dir)
 		
-	return soup
+	return soup, html_dir
 	
 if __name__ == '__main__':
 	html_path = archive()

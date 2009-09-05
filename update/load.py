@@ -5,6 +5,7 @@ def load(data_dict, timestamp):
 	"""
 	Accepts the results of the pull function and loads them into our Django models.
 	"""
+	loaded_new_data = False
 
 	# Load the Edition
 	edition_obj, edition_created = Edition.objects.get_or_create(
@@ -12,6 +13,7 @@ def load(data_dict, timestamp):
 	)
 	if edition_created:
 		print "Added edition %s" % str(edition_obj.date)
+		loaded_new_data = True
 
 	for category, score in data_dict.items():
 		# Load the categories
@@ -21,6 +23,7 @@ def load(data_dict, timestamp):
 		)
 		if category_created:
 			print "Added category %s" % category_obj.name
+			loaded_new_data = True
 
 		# Load the scores
 		score_obj, score_created = Score.objects.get_or_create(
@@ -30,3 +33,6 @@ def load(data_dict, timestamp):
 		)
 		if score_created:
 			print "Added score %s" % score_obj
+			loaded_new_data = True
+			
+	return loaded_new_data
