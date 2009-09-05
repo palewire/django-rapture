@@ -62,7 +62,7 @@ class Score(models.Model):
 	last_updated = models.DateTimeField(auto_now=True, editable=False)
 
 	class Meta:
-		ordering = ('edition', )
+		ordering = ('category', 'edition')
 		db_table = 'rapture_data_score'
 
 	def __unicode__(self):
