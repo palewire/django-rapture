@@ -18,6 +18,7 @@ class Category(models.Model):
 	class Meta:
 		ordering = ['name']
 		verbose_name = _('categories')
+		db_table = 'rapture_data_category'
 
 	def __unicode__(self):
 		return self.name
@@ -33,6 +34,7 @@ class Edition(models.Model):
 	class Meta:
 		ordering = ['-date']
 		get_latest_by = ['-date']
+		db_table = 'rapture_data_edition'
 
 	def __unicode__(self):
 		return u'%s (%s)'  % (str(self.date), self.total)
@@ -52,6 +54,7 @@ class Score(models.Model):
 
 	class Meta:
 		ordering = ('edition', )
+		db_table = 'rapture_data_score'
 
 	def __unicode__(self):
 		return u'%s - %s - %s' % (str(self.edition.date), self.category.name, self.score)

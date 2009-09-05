@@ -1,3 +1,2 @@
-* Write a loader for category descriptions
 * Figure out a way to redisplay the source HTML on my site with the images working
 * Figure out a way to parse the examples cited at the bottom of each week's update
