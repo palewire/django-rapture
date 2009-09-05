@@ -14,6 +14,9 @@ class Category(models.Model):
 	name = models.CharField(max_length=20, primary_key=True, help_text=_('The name of the category'))
 	slug = models.SlugField(unique=True, help_text=_('A stripped version of the name for URL strings'))
 	explanation = models.TextField(help_text=_('An explanation of the category provided by the editors of Rapture Ready.'), null=True, blank=True)
+	# Meta
+	created = models.DateTimeField(auto_now_add=True, editable=False)
+	last_updated = models.DateTimeField(auto_now=True, editable=False)
 
 	class Meta:
 		ordering = ['name']
@@ -30,6 +33,9 @@ class Edition(models.Model):
 	"""
 	date = models.DateField(verbose_name=_('Publication date of this edition of the Rapture Index.'))
 	total = models.IntegerField(default=0, editable=False, verbose_name=_('The total Rapture Index score from this edition.'))
+	# Meta
+	created = models.DateTimeField(auto_now_add=True, editable=False)
+	last_updated = models.DateTimeField(auto_now=True, editable=False)
 
 	class Meta:
 		ordering = ['-date']
@@ -51,6 +57,9 @@ class Score(models.Model):
 	category = models.ForeignKey(Category, help_text=_('The indicator this score is for.'))
 	score = models.IntegerField(help_text=_('The score, ranging from 1-5'))
 	comment = models.TextField(help_text=_('An explanation of this score given by the editors of Rapture Ready.'), null=True, blank=True)
+	# Meta
+	created = models.DateTimeField(auto_now_add=True, editable=False)
+	last_updated = models.DateTimeField(auto_now=True, editable=False)
 
 	class Meta:
 		ordering = ('edition', )
@@ -58,6 +67,7 @@ class Score(models.Model):
 
 	def __unicode__(self):
 		return u'%s - %s - %s' % (str(self.edition.date), self.category.name, self.score)
+
 
 # Rerun the totals for each Edition whenever a Score is saved or deleted.
 signals.post_save.connect(count_scores, sender=Score)
