@@ -16,6 +16,11 @@
 		Here you can download raw data compiling the <b>{{ edition_list.count }} update{{ edition_list.count|pluralize }}</b> since August 31, 2009, when I began monitoring the site. 
 		There's also an archive containing <b>{{ scrape_list.count }} snapshot{{ scrape_list.count|pluralize }}</b> of the source material taken during that period.
 	</p>
+	
+	<p>In the future, this site could include analysis and visualization of the The Rapture Index, but for now is simply seeking to archive the data for posterity. 
+	</p>
+	
+	<p>If you have any questions or suggestions, please forward them to <a href="http://www.palewire.com/who-is-ben-welsh/">me</a>.</p>
 
 	<h2>Data downloads</h2>
 
@@ -23,9 +28,9 @@
 
 		<ul>
 
-			<li><a href="">CSV</a></li>
-			<li><a href="">JSON</a></li>
-			<li><a href="">XML</a></li>
+			<li><a href="{% url rapture-download-csv %}">CSV</a></li>
+			<li><a href="{% url rapture-download-json %}">JSON</a></li>
+			<li><a href="{% url rapture-download-xml %}">XML</a></li>
 
 		</ul>
 

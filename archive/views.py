@@ -1,9 +1,7 @@
 # Utils
-import os
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic.simple import direct_to_template
-from BeautifulSoup import BeautifulSoup
 
 # Models
 from update.models import *
@@ -28,6 +26,11 @@ def index(request):
 		'edition_list': edition_list
 	})
 
+def archive_list(request):
+	scrape_list = UpdateLog.objects.complete().order_by("-end_date")
+	return direct_to_template(request, 'archive_list.html', {
+		'scrape_list': scrape_list
+	})
 
 def archive_detail(request, id):
 	update = get_object_or_404(UpdateLog, id=id)
