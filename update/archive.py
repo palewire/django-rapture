@@ -64,7 +64,7 @@ def archive(data_dir):
 		_mkdir(r_dir)
 		
 		# Path together an absolute URL we can download
-		url = 'http://www.raptureready.com' + r
+		url = 'http://www.raptureready.com/' + r
 		local_path = os.path.join(r_dir, tail)
 		urllib.urlretrieve(url, local_path)
 		
