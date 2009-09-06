@@ -34,7 +34,7 @@ def archive(data_dir, start_date):
 	soup = BeautifulSoup(html)
 
 	# Save the html in our archive
-	html_dir = os.path.join(data_dir, str(start_date.date()), str(start_date.time()))
+	html_dir = os.path.join(data_dir, str(start_date.date()), str(start_date.strftime('%H:%M:%S')))
 	_mkdir(html_dir)
 	outfile_path = os.path.join(html_dir, 'rap2.html')
 	outfile = open(outfile_path, 'w')

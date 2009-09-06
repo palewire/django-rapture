@@ -45,6 +45,6 @@ class UpdateLog(models.Model):
 			return None
 		else:
 			import os
-			html_path = os.path.join(str(self.start_date.date()), str(self.start_date.time()), 'rap2.html')
+			html_path = os.path.join(str(self.start_date.date()), str(self.start_date.strftime('%H:%M:%S')), 'rap2.html')
 			print html_path
 			return ('rapture-archive-media', [html_path])
