@@ -1,3 +1,2 @@
-* Figure out a way to redisplay the source HTML on my site with the images working
 * Keep a close eye on data in the next update to see if any new problems surface
-* Figure out a way to simply publish the data so people can grind with it
+* Publish the all-time charts across different editions
