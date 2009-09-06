@@ -34,4 +34,17 @@ class UpdateLog(models.Model):
 		db_table = 'rapture_update_log'
 		get_latest_by = 'end_date'
 		verbose_name_plural = _('update log')
-		
+	
+	@models.permalink
+	def get_absolute_url(self):
+		return ('rapture-archive-detail', [str(self.id)])
+
+	@models.permalink
+	def get_iframe_url(self):
+		if not self.archive_path:
+			return None
+		else:
+			import os
+			html_path = os.path.join(str(self.start_date.date()), str(self.start_date.time()), 'rap2.html')
+			print html_path
+			return ('rapture-archive-media', [html_path])

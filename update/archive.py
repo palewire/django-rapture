@@ -4,6 +4,8 @@ import datetime
 import urllib
 from BeautifulSoup import BeautifulSoup
 from toolbox._mkdir import _mkdir
+from copy import copy
+
 
 def get_explanations(html_dir):
 	"""
@@ -19,7 +21,7 @@ def get_explanations(html_dir):
 	print >> outfile, soup.prettify()
 
 
-def archive(data_dir):
+def archive(data_dir, start_date):
 	"""
 	Visits the Rapture Ready Index and archive the site.
 
@@ -28,15 +30,15 @@ def archive(data_dir):
 	# Visit the URL and snatch the HTML
 	url = 'http://www.raptureready.com/rap2.html'
 	http = urllib.urlopen(url)
-	soup = BeautifulSoup(http)
+	html = http.read()
+	soup = BeautifulSoup(html)
 
 	# Save the html in our archive
-	now = datetime.datetime.now()
-	html_dir = os.path.join(data_dir, str(now.date()), str(now.time()))
+	html_dir = os.path.join(data_dir, str(start_date.date()), str(start_date.time()))
 	_mkdir(html_dir)
 	outfile_path = os.path.join(html_dir, 'rap2.html')
 	outfile = open(outfile_path, 'w')
-	print >> outfile, soup.prettify()
+	print >> outfile, html
 	
 	# Create a list of all the resources the page calls
 	# that we want to download so we can recreate it later.

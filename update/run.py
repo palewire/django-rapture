@@ -25,7 +25,7 @@ if __name__ == '__main__':
 	log = UpdateLog.objects.create(start_date=now)
 
 	# Scrape site
-	soup, html_dir = archive(data_dir)
+	soup, html_dir = archive(data_dir, now)
 	
 	# Update log
 	log.archive_path = html_dir
