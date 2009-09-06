@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>
+	<img style="vertical-align:text-bottom;" height="40" src="http://www.palewire.com/media/icons/posts-big.gif" alt="post"/>&nbsp;
+	The Rapture Index Archive
+</h1>
+
+<div id="detailbody">
+
+<!--
+Last updated: 
+-->
+
+	<p>
+		Welcome to palewire's archive of <a href="http://www.raptureready.com/rap2.html">The Rapture Index</a>, the "speedometer of end-time activity" published at <a href="http://www.raptureready.com">raptureready.com</a>.
+	</p>
+	<p>
+		Here you can download raw data compiling the {{ edition_list.count }} update{{ edition_list.count|pluralize }} since August 31, 2009, when I began monitoring the site. 
+		There's also an archive containing {{ scrape_list.count }} snapshot{{ scrape_list.count|pluralize }} of the source material taken during that period.
+	</p>
+		The data were last updated {{ last_updated|date:"N d, Y" }}, at {{ last_updated|date:"P"}}
+	</p>
+
+
+	<h2>Data downloads</h2>
+
+		<br>
+
+		<ul>
+
+			<li><a href="">CSV</a></li>
+			<li><a href="">JSON</a></li>
+			<li><a href="">XML</a></li>
+
+		</ul>
+
+	<h2>Archived snapshots</h2>
+	
+	<br>
+	
+	{% for obj in scrape_list %}
+
+		<ul>
+
+			<li><a href="">{{ obj.end_date|date:"N d, Y, P" }}</a></li>
+	
+		</ul>
+	
+	{% endfor %}
+
+
+</div>
+{% endblock %}
