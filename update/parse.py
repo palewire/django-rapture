@@ -5,6 +5,7 @@ import time
 import datetime
 import urllib
 from BeautifulSoup import BeautifulSoup
+from django.utils.text import normalize_newlines
 from toolbox.remove_newlines import remove_newlines
 
 
@@ -79,13 +80,19 @@ def parse(soup):
 
 	# Pull the HTML block that holds comments associted with sources
 	comments = soup.find('pre', attrs={'class': 'style1'})
-	from django.utils.text import normalize_newlines
+	# Standardize the newlines so I can be confident in my regexes
 	comments = normalize_newlines(comments.contents[0])
-	twod = re.compile('\n\d{2} ')
-	comments = twod.split(comments)
+	# Make a regex that will catch the category numbers
+	two_digits = re.compile('\n\d{2} ')
+	# Use it to the split the HTML block
+	comments = two_digits.split(comments)
+	# Break the items in half, using the newline we expect to separate the category from the comment
 	comments = [i.split('\n', 1) for i in comments]
+	# Run a number of routine cleanup operations
 	comments = [clean_comment(i) for i in comments]
+	# Filter out any empty entires
 	comments = [i for i in comments if i[0]]
+	# Load the results into a dictionary
 	comments_dict = {}
 	for category, comment in comments:
 		comments_dict[category] = comment
