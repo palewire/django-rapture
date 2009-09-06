@@ -32,10 +32,10 @@ if __name__ == '__main__':
 	log.save()
 	
 	# Parse HTML
-	scores_dict, timestamp = parse(soup)
+	scores_dict, comments_dict, timestamp = parse(soup)
 	
 	# Update db
-	loaded_new_data = load(scores_dict, timestamp)
+	loaded_new_data = load(scores_dict, comments_dict, timestamp)
 	
 	# Finalize log
 	now = datetime.datetime.now()

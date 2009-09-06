@@ -5,6 +5,8 @@ import time
 import datetime
 import urllib
 from BeautifulSoup import BeautifulSoup
+from toolbox.remove_newlines import remove_newlines
+
 
 def text2date(text):
 	"""
@@ -28,6 +30,14 @@ def parse_score(text):
 	# regardless of how long the string might be.
 	return text[0]
 
+def clean_comment(pair):
+    """
+    Cleans the bits scraped from the comments section.
+    """
+    pair = [remove_newlines(i) for i in pair]
+    pair = [i.strip() for i in pair]
+    pair[0] = pair[0].replace(':', '')
+    return pair
 
 def parse(soup):
 	
@@ -67,6 +77,19 @@ def parse(soup):
 	# And then pass it to our conversion function that will translate the string into a date object.
 	timestamp = text2date(timestamp_string.split('Updated')[1].strip())
 
+	# Pull the HTML block that holds comments associted with sources
+	comments = soup.find('pre', attrs={'class': 'style1'})
+	from django.utils.text import normalize_newlines
+	comments = normalize_newlines(comments.contents[0])
+	twod = re.compile('\n\d{2} ')
+	comments = twod.split(comments)
+	comments = [i.split('\n', 1) for i in comments]
+	comments = [clean_comment(i) for i in comments]
+	comments = [i for i in comments if i[0]]
+	comments_dict = {}
+	for category, comment in comments:
+		comments_dict[category] = comment
+		
 	# Return the dictionary of scores along with the timestamp in a tuple
-	return scores_dict, timestamp
+	return scores_dict, comments_dict, timestamp
 	
