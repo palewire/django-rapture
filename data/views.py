@@ -10,16 +10,16 @@ from data.models import *
 
 
 def csv(request):
-	score_list = Score.objects.all()
+	score_list = Score.objects.all().order_by('edition', 'category')
 	context = {'score_list': score_list}
 	return render_to_response('scores.csv', context, mimetype="text/javascript")
 
 def json(request):
-	score_list = Score.objects.all()
+	score_list = Score.objects.all().order_by('edition', 'category')
 	context = {'score_list': score_list}
 	return render_to_response('scores.json', context, mimetype="text/javascript")
 
 def xml(request):
-	score_list = Score.objects.all()
+	score_list = Score.objects.all().order_by('edition', 'category')
 	context = {'score_list': score_list}
 	return render_to_response('scores.xml', context, mimetype="text/javascript")

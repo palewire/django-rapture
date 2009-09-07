@@ -27,8 +27,6 @@ if __name__ == '__main__':
 	# Scrape site
 	soup, html_dir = archive(data_dir, now)
 	
-	#print soup.prettify()
-	
 	# Update log
 	log.archive_path = html_dir
 	log.save()
