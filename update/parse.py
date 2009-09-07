@@ -7,6 +7,7 @@ import urllib
 from BeautifulSoup import BeautifulSoup
 from django.utils.text import normalize_newlines
 from toolbox.remove_newlines import remove_newlines
+from toolbox.dprint import dprint
 
 
 def text2date(text):
@@ -14,6 +15,7 @@ def text2date(text):
 	Converts the date strings published by Rapture Ready into a datetime.date object.
 	"""
 	text = text.strip()
+	text = text.replace('&nbsp;', '')
 	time_tuple = time.strptime(text, '%b %d, %Y')
 	return datetime.date(*(time_tuple[0:3]))
 
@@ -37,7 +39,11 @@ def clean_comment(pair):
     """
     pair = [remove_newlines(i) for i in pair]
     pair = [i.strip() for i in pair]
+    # Remove colons
     pair[0] = pair[0].replace(':', '')
+    # Remove excess whitespace
+    whitespace_regex = re.compile('\s\s+')
+    pair[1] = whitespace_regex.sub(' ', pair[1])
     return pair
 
 def parse(soup):
@@ -52,7 +58,7 @@ def parse(soup):
 	# Initialize a dictionary for storing the results
 	scores_dict = {}
 	# Create a regex for picking through the wacky way they print the scores.
-	score_regex = re.compile('^\\n<!-(.*)->(?P<score>(.*))$')
+	score_regex = re.compile('^\\n?<!-(.*)->(?P<score>(.*))$')
 	# Loop through the columns
 	for column in column_list:
 		# Make a list of the entries in the order they appear.
@@ -62,7 +68,11 @@ def parse(soup):
 		# Smush all the HTML into one big string
 		scores_string = "".join(map(str, scores_table.font.contents))
 		# Split that HTML on <br> tags and use the regex to snatch out the scores.
-		scores = [score_regex.search(i).group('score').strip() for i in scores_string.split('<br />')]
+		split_strings = scores_string.split('<br />')
+		scores = []
+		for string in split_strings:
+			score = score_regex.search(string).group('score').strip()
+			scores.append(score)
 		# Loop through the entries
 		for i, entry in enumerate(entries):
 			# And assign it with its corresponding score to our data dictionary.
