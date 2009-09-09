@@ -86,6 +86,7 @@ class Score(models.Model):
 	category = models.ForeignKey(Category, help_text=_('The indicator this score is for.'))
 	score = models.IntegerField(help_text=_('The score, ranging from 1-5'))
 	comment = models.TextField(help_text=_('An explanation of this score given by the editors of Rapture Ready.'), null=True, blank=True)
+	#is_amended = models.BooleanField(default=False, help_text=_('Indicates if the score has been replaced with updated information.'))
 	# Meta
 	created = models.DateTimeField(auto_now_add=True, editable=False)
 	last_updated = models.DateTimeField(auto_now=True, editable=False)
