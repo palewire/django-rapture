@@ -9,17 +9,27 @@ from update.models import *
 from data.models import *
 
 
-def csv(request):
+def get_data_dict():
+	"""
+	A reusable function that pulls data from the Score field and loads it in a dictionary.
+	"""
 	score_list = Score.objects.all().order_by('edition', 'category')
-	context = {'score_list': score_list}
-	return render_to_response('scores.csv', context, mimetype="text/javascript")
+	return dict(score_list=score_list)
+
+def csv(request):
+	return render_to_response('scores.csv', get_data_dict(), mimetype="text/javascript")
 
 def json(request):
-	score_list = Score.objects.all().order_by('edition', 'category')
-	context = {'score_list': score_list}
-	return render_to_response('scores.json', context, mimetype="text/javascript")
+	return render_to_response('scores.json', get_data_dict(), mimetype="text/javascript")
 
 def xml(request):
-	score_list = Score.objects.all().order_by('edition', 'category')
-	context = {'score_list': score_list}
-	return render_to_response('scores.xml', context, mimetype="text/javascript")
+	return render_to_response('scores.xml', get_data_dict(), mimetype="text/javascript")
+	
+def xls(request):
+	"""
+	A method for exporting to Microsoft Excel lifted from "DjangoSnippet #911":http://www.djangosnippets.org/snippets/911/
+	"""
+	response = render_to_response("scores.html", get_data_dict())
+	response['Content-Disposition'] = 'attachment; filename=scores.xls'
+	response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+	return response

@@ -15,6 +15,7 @@ urlpatterns = patterns('',
 	url(r'^download/csv/$', 'data.views.csv', name="rapture-download-csv"),
 	url(r'^download/json/$', 'data.views.json', name="rapture-download-json"),
 	url(r'^download/xml/$', 'data.views.xml', name="rapture-download-xml"),
+	url(r'^download/xls/$', 'data.views.xls', name="rapture-download-xls"),
 	
 	# Archives
 	url(r'^archive/snapshot/list/$', 
