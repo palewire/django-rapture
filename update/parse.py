@@ -71,7 +71,13 @@ def parse(soup):
 		split_strings = scores_string.split('<br />')
 		scores = []
 		for string in split_strings:
-			score = score_regex.search(string).group('score').strip()
+			try:
+				score = score_regex.search(string).group('score').strip()
+			except:
+				if string[-2] == '-':
+					score = string[-3]
+				else:
+					score = string[-1]
 			scores.append(score)
 		# Loop through the entries
 		for i, entry in enumerate(entries):
