@@ -5,7 +5,7 @@ import time
 import datetime
 import urllib
 from BeautifulSoup import BeautifulSoup
-from django.utils.text import normalize_newlines
+from django.utils.text import normalize_newlines, force_unicode
 from toolbox.remove_newlines import remove_newlines
 from toolbox.dprint import dprint
 
@@ -74,7 +74,7 @@ def parse(soup):
 			try:
 				score = score_regex.search(string).group('score').strip()
 			except:
-				if string[-2] == '-':
+				if string[-2] in ['-', '+']:
 					score = string[-3]
 				else:
 					score = string[-1]
@@ -89,7 +89,7 @@ def parse(soup):
 	# Use a regex to snag the line where the update date is published, and then walk up to the parent HTML tag
 	timestamp_html = soup.find(text=re.compile('Updated')).parent
 	# Smush all the html in the tag into a big string, stripping out the html
-	timestamp_string = strip_html("".join(map(str, timestamp_html)))
+	timestamp_string = strip_html("".join(map(force_unicode, timestamp_html)))
 	# Split the string on 'updated' and grab the other half, stripping out all the whitespace.
 	# And then pass it to our conversion function that will translate the string into a date object.
 	timestamp = text2date(timestamp_string.split('Updated')[1].strip())
