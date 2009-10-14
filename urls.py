@@ -18,10 +18,8 @@ urlpatterns = patterns('',
 	url(r'^download/xls/$', 'data.views.xls', name="rapture-download-xls"),
 	
 	# Archives
-	url(r'^archive/snapshot/list/$', 
-		'archive.views.archive_list', name="rapture-archive-list"),
-	url(r'^archive/snapshot/(?P<id>[0-9]+)/$', 
-		'archive.views.archive_detail', name="rapture-archive-detail"),
+	url(r'^archive/snapshot/list/$', 'archive.views.archive_list', name="rapture-archive-list"),
+	url(r'^archive/snapshot/(?P<id>[0-9]+)/$', 'archive.views.archive_detail', name="rapture-archive-detail"),
 	url(r'^archive/snapshot/media/(?P<path>.*)$', 'django.views.static.serve',
 		{'document_root': settings.STATIC_DOC_ROOT, 'show_indexes': True}, name="rapture-archive-media"),
 

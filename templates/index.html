@@ -46,7 +46,7 @@
 			<li><a href="{{ obj.get_absolute_url }}">{{ obj.end_date|date:"N d, Y, P" }}</a></li>
 
 		{% ifequal forloop.counter 3 %}
-			<li><a href="">More...</a></li>
+			<li><a href="{% url rapture-archive-list %}">More...</a></li>
 		{% endifequal %}
 
 	{% endfor %}

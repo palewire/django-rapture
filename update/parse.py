@@ -31,7 +31,12 @@ def parse_score(text):
 	# Scores range from 1 to 5, so we should expect typical score to only be one character in length.
 	# And since we only need that first character, we can just snap it from the rest each time,
 	# regardless of how long the string might be.
-	return text[0]
+	try:
+		text = text[0]
+	except IndexError:
+		text = -1
+		print "BAD SCORE! CHECK THE DATA!"
+	return text
 
 def clean_comment(pair):
     """
