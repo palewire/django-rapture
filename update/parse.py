@@ -6,8 +6,8 @@ import datetime
 import urllib
 from BeautifulSoup import BeautifulSoup
 from django.utils.text import normalize_newlines, force_unicode
-from toolbox.remove_newlines import remove_newlines
-from toolbox.dprint import dprint
+from rapture.toolbox.remove_newlines import remove_newlines
+from rapture.toolbox.dprint import dprint
 
 
 def text2date(text):
