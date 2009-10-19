@@ -19,7 +19,7 @@ from update.load import load
 import datetime
 from rapture.toolbox.dprint import dprint
 
-if __name__ == '__main__':
+def run():
 	# Prepare log
 	now = datetime.datetime.now()
 	log = UpdateLog.objects.create(start_date=now)
@@ -43,3 +43,6 @@ if __name__ == '__main__':
 	log.loaded_new_data = loaded_new_data
 	log.outcome = 'complete'
 	log.save()
+
+if __name__ == '__main__':
+	run()
