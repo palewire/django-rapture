@@ -60,7 +60,7 @@ class Edition(models.Model):
 		return u'%s (%s)'  % (str(self.date), self.total)
 
 	def get_total(self):
-		return sum([i.score for i in self.score_set.all()])
+		return sum([i.score for i in self.score_set.all() if i.score >= 0])
 		
 	def get_prophetic_activity(self):
 		"""
