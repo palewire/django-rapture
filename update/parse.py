@@ -6,8 +6,8 @@ import datetime
 import urllib
 from BeautifulSoup import BeautifulSoup
 from django.utils.text import normalize_newlines, force_unicode
-from rapture.toolbox.remove_newlines import remove_newlines
-from rapture.toolbox.dprint import dprint
+from toolbox.remove_newlines import remove_newlines
+from toolbox.dprint import dprint
 
 
 def text2date(text):
@@ -16,7 +16,7 @@ def text2date(text):
 	"""
 	text = text.strip()
 	text = text.replace('&nbsp;', '')
-	time_tuple = time.strptime(text, '%b %d, %Y')
+	time_tuple = time.strptime(text + '10', '%b %d, %Y')
 	return datetime.date(*(time_tuple[0:3]))
 
 def strip_html(text):

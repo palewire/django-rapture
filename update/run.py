@@ -17,7 +17,7 @@ from update.load import load
 
 # Helpers
 import datetime
-from rapture.toolbox.dprint import dprint
+from toolbox.dprint import dprint
 
 def run():
 	# Prepare log
