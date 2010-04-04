@@ -20,7 +20,7 @@ def index(request):
     # Pull a list of all the editions we have published
     edition_list = Edition.objects.all()
     
-    return direct_to_template(request, 'index.html', {
+    return direct_to_template(request, 'rapture/archive/index.html', {
         'last_updated': last_updated,
         'scrape_list': scrape_list,
         'edition_list': edition_list
@@ -28,12 +28,12 @@ def index(request):
 
 def archive_list(request):
     scrape_list = UpdateLog.objects.complete().order_by("-end_date")
-    return direct_to_template(request, 'archive_list.html', {
+    return direct_to_template(request, 'rapture/archive/archive_list.html', {
         'scrape_list': scrape_list
     })
 
 def archive_detail(request, id):
     update = get_object_or_404(UpdateLog, id=id)
-    return direct_to_template(request, 'archive_detail.html', {
+    return direct_to_template(request, 'rapture/archive/archive_detail.html', {
         'update_log': update,
     })

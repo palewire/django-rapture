@@ -3,8 +3,8 @@ import sys
 
 # Load Django config
 current_dir = os.path.abspath(__file__)
-projects_dir = os.sep.join(current_dir.split(os.sep)[:-2])
-data_dir = os.path.join(projects_dir, 'archive', 'html')
+projects_dir = os.sep.join(current_dir.split(os.sep)[:-3])
+data_dir = os.path.join(projects_dir, 'rapture/archive', 'html')
 os.environ['PYTHONPATH'] = projects_dir
 os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
 sys.path.append(projects_dir)
@@ -17,7 +17,7 @@ from rapture.update.load import load
 
 # Helpers
 import datetime
-from toolbox.dprint import dprint
+from rapture.toolbox.dprint import dprint
 
 def run():
     # Prepare log
