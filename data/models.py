@@ -94,7 +94,7 @@ class Score(models.Model):
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 
     class Meta:
-        app_label 'rapture'
+        app_label = 'rapture'
         ordering = ('category', 'edition')
         db_table = 'rapture_data_score'
 
